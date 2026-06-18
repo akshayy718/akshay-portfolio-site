@@ -2,7 +2,7 @@
 
 A personal portfolio website built to showcase real, deployed AI and full-stack projects — not a generic template. Built with React, Vite, Tailwind CSS, and Framer Motion.
 
-**Live site:** [akshay-portfolio-site.vercel.app](https://akshay-portfolio-site.vercel.app/)
+**Live site:** [https://akshay-portfolio-site-vert.vercel.app/)
 
 ![Portfolio screenshot](./docs/screenshot.png)
 
