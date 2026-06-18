@@ -106,9 +106,9 @@ const experience = [
       "Built a Cardiovascular Disease Prediction model using TensorFlow and Scikit-learn, gaining hands-on experience with ML frameworks and iterative model development.",
   },
   {
-    period: "2022 \u2014 2024",
-    role: "Full Stack Developer (Freelance)",
-    company: "Quantum Gully",
+    period: "2023 \u2014 2025",
+    role: "Full Stack Developer",
+    company: "Freelance",
     description:
       "Developed responsive landing pages for multiple businesses, handling end-to-end client communication, design, and delivery.",
   },
@@ -253,7 +253,7 @@ const socialLinks = [
   },
 ];
 
-function TiltCard({ children, className }) {
+function TiltCard({ children, className, intensity = 8 }) {
   const ref = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
@@ -263,7 +263,7 @@ function TiltCard({ children, className }) {
     const rect = card.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: py * -8, y: px * 8 });
+    setTilt({ x: py * -intensity, y: px * intensity });
   };
 
   const handleMouseLeave = () => setTilt({ x: 0, y: 0 });
@@ -294,6 +294,7 @@ function ChatDemo({ isDark, border, subtext }) {
   ]);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
+  const [showSql, setShowSql] = useState(false);
 
   const handleAsk = (query) => {
     if (!query.trim() || thinking) return;
@@ -348,13 +349,23 @@ function ChatDemo({ isDark, border, subtext }) {
           >
             {m.text}
             {m.sql && (
-              <pre
-                className={`mt-2 text-xs p-3 rounded-lg overflow-x-auto ${
-                  isDark ? "bg-black/40 text-gray-300" : "bg-black/5 text-gray-700"
-                }`}
-              >
-                {m.sql}
-              </pre>
+              <div className="mt-2">
+                <button
+                  onClick={() => setShowSql((prev) => !prev)}
+                  className="text-[10px] uppercase tracking-widest text-amber-500/70 hover:text-amber-500 mb-1 flex items-center gap-1"
+                >
+                  {showSql ? "Hide" : "Show"} Generated SQL
+                </button>
+                {showSql && (
+                  <pre
+                    className={`text-xs p-3 rounded-lg overflow-x-auto ${
+                      isDark ? "bg-black/40 text-gray-300" : "bg-black/5 text-gray-700"
+                    }`}
+                  >
+                    {m.sql}
+                  </pre>
+                )}
+              </div>
             )}
           </div>
         ))}
@@ -552,6 +563,7 @@ function App() {
               className={project.featured ? "md:col-span-2" : ""}
             >
             <TiltCard
+              intensity={project.demoType === "embedded" ? 2 : 8}
               className={`relative ${cardBg} backdrop-blur-xl border rounded-2xl p-8 md:p-10 hover:border-amber-400/50 transition group`}
             >
               <div
