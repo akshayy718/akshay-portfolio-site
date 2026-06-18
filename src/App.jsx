@@ -1,5 +1,23 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import {
+  Code2,
+  Database,
+  Brain,
+  Cpu,
+  Workflow,
+  Cloud,
+  GitBranch,
+  Smartphone,
+  Layers,
+  Sparkles,
+  Network,
+  Server,
+  MessageCircle,
+  Github,
+  Linkedin,
+  Instagram,
+} from "lucide-react";
 
 const projects = [
   {
@@ -53,7 +71,45 @@ const projects = [
   },
 ];
 
-const tools = ["Python", "SAP BTP", "LangChain", "Groq", "RAG", "n8n", "React", "FastAPI", "LLMs"];
+const tools = [
+  { name: "Python", icon: Code2 },
+  { name: "SAP BTP", icon: Cloud },
+  { name: "LangChain", icon: Network },
+  { name: "Groq", icon: Cpu },
+  { name: "RAG", icon: Brain },
+  { name: "n8n", icon: Workflow },
+  { name: "React", icon: Layers },
+  { name: "FastAPI", icon: Server },
+  { name: "LLMs", icon: Sparkles },
+  { name: "MySQL", icon: Database },
+  { name: "Git", icon: GitBranch },
+  { name: "Android", icon: Smartphone },
+];
+
+const experience = [
+  {
+    period: "04/2026 \u2014 Present",
+    role: "IT Assistant",
+    company: "Ramah General Contracting & Transport L.L.C",
+    description:
+      "Supporting IT operations for a 1,300+ employee UAE infrastructure contractor. Built a proof-of-concept NL-SQL chatbot for operational reporting, and administer Asite for site documentation across active construction projects.",
+    current: true,
+  },
+  {
+    period: "01/2024 \u2014 07/2024",
+    role: "AI Intern",
+    company: "Corizo",
+    description:
+      "Built a Cardiovascular Disease Prediction model using TensorFlow and Scikit-learn, gaining hands-on experience with ML frameworks and iterative model development.",
+  },
+  {
+    period: "2022 \u2014 2024",
+    role: "Full Stack Developer (Freelance)",
+    company: "Quantum Gully",
+    description:
+      "Developed responsive landing pages for multiple businesses, handling end-to-end client communication, design, and delivery.",
+  },
+];
 
 const sampleQueries = [
   {
@@ -163,6 +219,61 @@ function ThemeToggle({ theme, setTheme }) {
         <MoonIcon className="w-5 h-5 text-gray-700" />
       )}
     </button>
+  );
+}
+
+const socialLinks = [
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/918547232697",
+    icon: MessageCircle,
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/akshayy718",
+    icon: Github,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/akshay-santhosh-435499208/",
+    icon: Linkedin,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/_.akshay718",
+    icon: Instagram,
+  },
+];
+
+function TiltCard({ children, className }) {
+  const ref = useRef(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    const card = ref.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: py * -8, y: px * 8 });
+  };
+
+  const handleMouseLeave = () => setTilt({ x: 0, y: 0 });
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transition: "transform 0.15s ease-out",
+        transformStyle: "preserve-3d",
+      }}
+      className={className}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -380,17 +491,21 @@ function App() {
       {/* TOOLS MARQUEE */}
       <section className={`border-t ${border} py-8 overflow-hidden relative`}>
         <div className="flex whitespace-nowrap animate-marquee">
-          {[...tools, ...tools, ...tools].map((tool, i) => (
-            <span
-              key={i}
-              className={`text-2xl md:text-3xl font-semibold mx-8 flex items-center gap-8 ${
-                isDark ? "text-gray-700" : "text-gray-300"
-              }`}
-            >
-              {tool}
-              <span className="text-amber-500 text-base">&#9670;</span>
-            </span>
-          ))}
+          {[...tools, ...tools, ...tools].map((tool, i) => {
+            const Icon = tool.icon;
+            return (
+              <span
+                key={i}
+                className={`text-xl md:text-2xl font-semibold mx-8 flex items-center gap-3 ${
+                  isDark ? "text-gray-700" : "text-gray-300"
+                }`}
+              >
+                <Icon className="w-5 h-5 text-amber-500" strokeWidth={2} />
+                {tool.name}
+                <span className="text-amber-500 text-base ml-5">&#9670;</span>
+              </span>
+            );
+          })}
         </div>
         <style>{`
           @keyframes marquee {
@@ -426,9 +541,10 @@ function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: (i % 2) * 0.1 }}
-              className={`relative ${cardBg} backdrop-blur-xl border rounded-2xl p-8 md:p-10 hover:border-amber-400/50 transition group ${
-                project.featured ? "md:col-span-2" : ""
-              }`}
+              className={project.featured ? "md:col-span-2" : ""}
+            >
+            <TiltCard
+              className={`relative ${cardBg} backdrop-blur-xl border rounded-2xl p-8 md:p-10 hover:border-amber-400/50 transition group`}
             >
               <div
                 className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-500 pointer-events-none"
@@ -489,8 +605,59 @@ function App() {
                   </div>
                 )}
               </div>
+            </TiltCard>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* EXPERIENCE TIMELINE */}
+      <section className={`border-t ${border} py-24 md:py-32 px-6 md:px-16 lg:px-24`}>
+        <div className="flex items-start gap-6 mb-16">
+          <span className="text-amber-500 text-sm font-mono mt-2">05</span>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-6xl font-bold tracking-tight"
+          >
+            Career Path
+          </motion.h2>
+        </div>
+
+        <div className="relative max-w-3xl">
+          <div
+            className={`absolute left-[7px] top-2 bottom-2 w-px ${
+              isDark ? "bg-gray-800" : "bg-gray-300"
+            }`}
+          />
+          <div className="flex flex-col gap-12">
+            {experience.map((job, i) => (
+              <motion.div
+                key={job.role + job.company}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="relative pl-10"
+              >
+                <div
+                  className={`absolute left-0 top-1.5 w-3.5 h-3.5 rounded-full border-2 ${
+                    job.current
+                      ? "bg-amber-400 border-amber-400"
+                      : `${isDark ? "bg-black" : "bg-white"} border-gray-500`
+                  }`}
+                />
+                <p className="text-amber-500 text-sm font-mono mb-1">{job.period}</p>
+                <h3 className="text-xl font-bold">{job.role}</h3>
+                <p className={`${subtext} text-sm font-medium mb-2`}>{job.company}</p>
+                <p className={`${subtext} text-sm leading-relaxed max-w-xl`}>
+                  {job.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -527,6 +694,30 @@ function App() {
         >
           akshaysanthosh718@gmail.com
         </motion.a>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex gap-3 mt-8 md:ml-16"
+        >
+          {socialLinks.map((social) => {
+            const Icon = social.icon;
+            return (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className={`w-12 h-12 rounded-full flex items-center justify-center border ${border} hover:border-amber-400 hover:text-amber-500 transition`}
+              >
+                <Icon className="w-5 h-5" strokeWidth={1.8} />
+              </a>
+            );
+          })}
+        </motion.div>
       </section>
 
       <footer className={`border-t ${border} py-8 px-6 text-center text-sm ${isDark ? "text-gray-600" : "text-gray-400"}`}>
