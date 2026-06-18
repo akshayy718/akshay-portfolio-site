@@ -1,39 +1,58 @@
+<div align="center">
+
 # Akshay Portfolio Site
 
-A personal portfolio website built to showcase real, deployed AI and full-stack projects — not a generic template. Built with React, Vite, Tailwind CSS, and Framer Motion.
+**A personal portfolio built to prove real, shipped work — not another purple-gradient SaaS template.**
 
-**Live site:** [https://akshay-portfolio-site-vert.vercel.app/)
+[![Live Site](https://img.shields.io/badge/Live%20Site-akshay--portfolio--site--vert.vercel.app-fbbf24?style=for-the-badge)](https://akshay-portfolio-site-vert.vercel.app/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+
+</div>
+
+<br>
 
 ![Portfolio screenshot](./docs/screenshot.png)
 
+<br>
+
 ## About
 
-This site replaces the typical "purple gradient SaaS template" look with an editorial, asymmetric layout, a working dark/light theme toggle, glassmorphism project cards, and an interactive chatbot demo embedded directly on the page. Every project listed links to a real, live deployment or GitHub repository.
+This site replaces the typical "purple gradient SaaS template" look with an editorial, asymmetric layout, a fully working dark/light theme toggle, glassmorphism project cards with a 3D cursor-tilt effect, and an interactive chatbot demo embedded directly on the page. Every project listed links to a real, live deployment or GitHub repository — nothing here is a placeholder.
 
 ## Tech Stack
 
-- **React** + **Vite** for the frontend
-- **Tailwind CSS** for styling
-- **Framer Motion** for animations and scroll-triggered reveals
-- Deployed on **Vercel**, connected to this repo for automatic redeploys on push
+| Layer | Technology |
+|---|---|
+| Frontend | React + Vite |
+| Styling | Tailwind CSS |
+| Animation | Framer Motion |
+| Icons | react-icons (Simple Icons + Font Awesome) |
+| Hosting | Vercel, auto-deployed from this repo on every push |
 
 ## Features
 
 - Editorial hero layout with a cursor-following glow effect
 - Dark/light theme toggle with a fully separate color system for both modes
-- Infinite-scrolling marquee of tools and technologies
-- Glassmorphism project cards with hover-triggered glow accents
+- Infinite-scrolling marquee of real tech-stack logos
+- Glassmorphism project cards with a 3D tilt effect that follows your cursor
 - An interactive chatbot demo (pre-set sample Q&A) showcasing the natural-language SQL chatbot project
+- A vertical career timeline covering professional experience
 - One-click resume download
+- Direct contact icons: call, WhatsApp, GitHub, LinkedIn, Instagram
 - Fully responsive across desktop, tablet, and mobile
 
 ## Projects Featured
 
-1. **Natural Language SQL Chatbot** — LangChain + Groq (Llama 3.3 70B) + RAG, 91% semantic SQL accuracy
-2. **AI CV Screening App** — SAP CAP + Fiori Elements + Groq AI, deployed on SAP BTP Cloud Foundry
-3. **AI-Powered Universal Data Dashboard** — Streamlit + Plotly + Groq, natural-language analysis over any uploaded dataset
-4. **Brewnova** — Full-stack Django cafe ordering platform, deployed on PythonAnywhere
-5. **GL Entry Approval Automation** — n8n Cloud workflow bridging SAP SuccessFactors and Sage X3
+| # | Project | Stack |
+|---|---|---|
+| 01 | **Natural Language SQL Chatbot** | LangChain, Groq (Llama 3.3 70B), RAG &mdash; 91% semantic SQL accuracy |
+| 02 | **AI CV Screening App** | SAP CAP, Fiori Elements, Groq AI &mdash; deployed on SAP BTP Cloud Foundry |
+| 03 | **AI-Powered Universal Data Dashboard** | Streamlit, Plotly, Groq &mdash; natural-language analysis over any uploaded dataset |
+| 04 | **Brewnova** | Django, full-stack cafe ordering platform &mdash; deployed on PythonAnywhere |
+| 05 | **GL Entry Approval Automation** | n8n Cloud workflow bridging SAP SuccessFactors and Sage X3 |
 
 ## Running Locally
 
@@ -50,4 +69,7 @@ The site will be available at `http://localhost:5173`.
 
 **Akshay Santhosh**
 AI/ML Engineer and Automation Engineer
-[GitHub](https://github.com/akshayy718) · [Portfolio](https://akshay-portfolio-site.vercel.app/)
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-fbbf24?style=flat-square)](https://akshay-portfolio-site-vert.vercel.app/)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/akshayy718)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akshay-santhosh-435499208/)
