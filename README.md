@@ -1,155 +1,53 @@
-# 🤖 Northwind Database Chatbot
+# Akshay Portfolio Site
 
-An AI-powered chatbot that converts natural language questions into SQL queries and returns answers in plain English. Built using LangChain, Groq's Llama 3.3 70B model, and Microsoft SQL Server.
+A personal portfolio website built to showcase real, deployed AI and full-stack projects — not a generic template. Built with React, Vite, Tailwind CSS, and Framer Motion.
 
----
+**Live site:** [akshay-portfolio-site.vercel.app](https://akshay-portfolio-site.vercel.app/)
 
-## 📸 Screenshots
+![Portfolio screenshot](./docs/screenshot.png)
 
-![Screenshot1](screenshots/Screenshot%202026-06-11%20135228.png)
-![Screenshot2](screenshots/Screenshot%202026-06-11%20135257.png)
-![Screenshot3](screenshots/Screenshot%202026-06-11%20135314.png)
-![Screenshot4](screenshots/Screenshot%202026-06-11%20135340.png)
-![Screenshot5](screenshots/Screenshot%202026-06-11%20135410.png)
-![Screenshot6](screenshots/Screenshot%202026-06-11%20135503.png)
+## About
 
----
+This site replaces the typical "purple gradient SaaS template" look with an editorial, asymmetric layout, a working dark/light theme toggle, glassmorphism project cards, and an interactive chatbot demo embedded directly on the page. Every project listed links to a real, live deployment or GitHub repository.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-| Technology | Purpose |
-|------------|---------|
-| Python 3.13 | Core programming language |
-| LangChain | AI/LLM framework |
-| Groq API (Llama 3.3 70B) | Natural language to SQL generation |
-| Microsoft SQL Server | Database backend |
-| Northwind Database | Sample ERP dataset |
-| Gradio | Web UI interface |
-| SQLAlchemy | Database ORM |
-| PyODBC | SQL Server connection driver |
+- **React** + **Vite** for the frontend
+- **Tailwind CSS** for styling
+- **Framer Motion** for animations and scroll-triggered reveals
+- Deployed on **Vercel**, connected to this repo for automatic redeploys on push
 
----
+## Features
 
-## ✨ Features
+- Editorial hero layout with a cursor-following glow effect
+- Dark/light theme toggle with a fully separate color system for both modes
+- Infinite-scrolling marquee of tools and technologies
+- Glassmorphism project cards with hover-triggered glow accents
+- An interactive chatbot demo (pre-set sample Q&A) showcasing the natural-language SQL chatbot project
+- One-click resume download
+- Fully responsive across desktop, tablet, and mobile
 
-- 💬 Natural language to SQL conversion
-- 🗄️ Microsoft SQL Server integration
-- 🔒 Read-only query enforcement (SELECT only)
-- 🌐 Web-based Gradio UI
-- ⚡ Fast responses using Groq's Llama 3.3 70B
-- 🔄 Automatic fallback to SQLite (demo mode)
-- 📊 Returns results in clear natural language
+## Projects Featured
 
----
+1. **Natural Language SQL Chatbot** — LangChain + Groq (Llama 3.3 70B) + RAG, 91% semantic SQL accuracy
+2. **AI CV Screening App** — SAP CAP + Fiori Elements + Groq AI, deployed on SAP BTP Cloud Foundry
+3. **AI-Powered Universal Data Dashboard** — Streamlit + Plotly + Groq, natural-language analysis over any uploaded dataset
+4. **Brewnova** — Full-stack Django cafe ordering platform, deployed on PythonAnywhere
+5. **GL Entry Approval Automation** — n8n Cloud workflow bridging SAP SuccessFactors and Sage X3
 
-## 🚀 How to Run
+## Running Locally
 
-### Prerequisites
-- Python 3.11+
-- Microsoft SQL Server (or SQL Server Express)
-- ODBC Driver 17 for SQL Server
-- Groq API key (free at [console.groq.com](https://console.groq.com))
-
-### Installation
-
-**Step 1: Clone the repository**
 ```bash
-git clone https://github.com/akshayy718/northwind-chatbot.git
-cd northwind-chatbot
+git clone https://github.com/akshayy718/akshay-portfolio-site.git
+cd akshay-portfolio-site
+npm install
+npm run dev
 ```
 
-**Step 2: Install dependencies**
-```bash
-pip install -r requirements.txt
-```
+The site will be available at `http://localhost:5173`.
 
-**Step 3: Create `.env` file**
-```
-GROQ_API_KEY=your_groq_api_key_here
-```
-
-**Step 4: Configure SQL Server in `config.py`**
-```python
-DATABASE_CONFIG = {
-    "server": "YOUR_SERVER_NAME",
-    "database": "Northwind",
-    "username": "",       # Leave empty for Windows Authentication
-    "password": ""        # Leave empty for Windows Authentication
-}
-```
-
-**Step 5: Set up Northwind database**
-- Download `instnwnd.sql` (included in repo)
-- Run it in SQL Server Management Studio (SSMS)
-
-**Step 6: Run the chatbot**
-```bash
-python chatbot.py
-```
-
-**Step 7: Open in browser**
-```
-http://localhost:7860
-```
-
----
-
-## 💬 Example Questions
-
-- "How many customers are there?"
-- "Show all customers from Germany"
-- "What are the top 5 most expensive products?"
-- "How many orders were placed in 1997?"
-- "Which product category has the most products?"
-- "What is the total revenue from all orders?"
-- "Who are the top 10 customers by number of orders?"
-- "Show all products in the Beverages category"
-
----
-
-## 📁 Project Structure
-
-```
-northwind-chatbot/
-├── chatbot.py          # Main chatbot application
-├── config.py           # Database configuration
-├── requirements.txt    # Python dependencies
-├── instnwnd.sql        # Northwind database setup script
-├── .gitignore          # Git ignore rules
-├── screenshots/        # Output screenshots
-└── README.md           # Project documentation
-```
-
----
-
-## 🔧 How It Works
-
-```
-User Question
-     ↓
-LangChain + Groq LLM
-     ↓
-SQL Query Generated
-     ↓
-Microsoft SQL Server
-     ↓
-Results Fetched
-     ↓
-Natural Language Answer
-     ↓
-Gradio UI Display
-```
-
----
-
-## 👨‍💻 Author
+## Author
 
 **Akshay Santhosh**
-- GitHub: [@akshayy718](https://github.com/akshayy718)
-- Email: akshaysanthosh718@gmail.com
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+AI/ML Engineer and Automation Engineer
+[GitHub](https://github.com/akshayy718) · [Portfolio](https://akshay-portfolio-site.vercel.app/)
