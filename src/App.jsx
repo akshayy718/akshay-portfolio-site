@@ -1,23 +1,26 @@
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import {
-  Code2,
-  Database,
-  Brain,
-  Cpu,
-  Workflow,
-  Cloud,
-  GitBranch,
-  Smartphone,
-  Layers,
-  Sparkles,
-  Network,
-  Server,
-  MessageCircle,
-  Code,
-  Briefcase,
-  Camera,
-} from "lucide-react";
+  SiPython,
+  SiSap,
+  SiLangchain,
+  SiN8N,
+  SiReact,
+  SiFastapi,
+  SiMysql,
+  SiGit,
+  SiAndroid,
+} from "react-icons/si";
+import {
+  FaBrain,
+  FaMicrochip,
+  FaMagic,
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+  FaWhatsapp,
+  FaPhone,
+} from "react-icons/fa";
 
 const projects = [
   {
@@ -72,18 +75,18 @@ const projects = [
 ];
 
 const tools = [
-  { name: "Python", icon: Code2 },
-  { name: "SAP BTP", icon: Cloud },
-  { name: "LangChain", icon: Network },
-  { name: "Groq", icon: Cpu },
-  { name: "RAG", icon: Brain },
-  { name: "n8n", icon: Workflow },
-  { name: "React", icon: Layers },
-  { name: "FastAPI", icon: Server },
-  { name: "LLMs", icon: Sparkles },
-  { name: "MySQL", icon: Database },
-  { name: "Git", icon: GitBranch },
-  { name: "Android", icon: Smartphone },
+  { name: "Python", icon: SiPython },
+  { name: "SAP BTP", icon: SiSap },
+  { name: "LangChain", icon: SiLangchain },
+  { name: "Groq", icon: FaMicrochip },
+  { name: "RAG", icon: FaBrain },
+  { name: "n8n", icon: SiN8N },
+  { name: "React", icon: SiReact },
+  { name: "FastAPI", icon: SiFastapi },
+  { name: "LLMs", icon: FaMagic },
+  { name: "MySQL", icon: SiMysql },
+  { name: "Git", icon: SiGit },
+  { name: "Android", icon: SiAndroid },
 ];
 
 const experience = [
@@ -224,24 +227,29 @@ function ThemeToggle({ theme, setTheme }) {
 
 const socialLinks = [
   {
+    label: "Call",
+    href: "tel:+971568387747",
+    icon: FaPhone,
+  },
+  {
     label: "WhatsApp",
     href: "https://wa.me/918547232697",
-    icon: MessageCircle,
+    icon: FaWhatsapp,
   },
   {
     label: "GitHub",
     href: "https://github.com/akshayy718",
-    icon: Code,
+    icon: FaGithub,
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/akshay-santhosh-435499208/",
-    icon: Briefcase,
+    icon: FaLinkedin,
   },
   {
     label: "Instagram",
     href: "https://www.instagram.com/_.akshay718",
-    icon: Camera,
+    icon: FaInstagram,
   },
 ];
 
