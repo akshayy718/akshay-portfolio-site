@@ -270,6 +270,8 @@ function useDeviceTilt() {
   const [tilt, setTilt] = useState({ beta: 90, gamma: 0 });
   const [isTouch, setIsTouch] = useState(false);
   const [needsPermission, setNeedsPermission] = useState(false);
+  const lastUpdateRef = useRef(0);
+  const THROTTLE_MS = 80;
 
   useEffect(() => {
     const touchDevice = window.matchMedia("(pointer: coarse)").matches;
@@ -277,6 +279,9 @@ function useDeviceTilt() {
     if (!touchDevice) return;
 
     const handleOrientation = (e) => {
+      const now = Date.now();
+      if (now - lastUpdateRef.current < THROTTLE_MS) return;
+      lastUpdateRef.current = now;
       setTilt({ beta: e.beta ?? 90, gamma: e.gamma ?? 0 });
     };
 
@@ -298,6 +303,9 @@ function useDeviceTilt() {
       const result = await DeviceOrientationEvent.requestPermission();
       if (result === "granted") {
         window.addEventListener("deviceorientation", (e) => {
+          const now = Date.now();
+          if (now - lastUpdateRef.current < THROTTLE_MS) return;
+          lastUpdateRef.current = now;
           setTilt({ beta: e.beta ?? 90, gamma: e.gamma ?? 0 });
         });
         setNeedsPermission(false);
