@@ -55,6 +55,29 @@ const projects = [
 
 const tools = ["Python", "SAP BTP", "LangChain", "Groq", "RAG", "n8n", "React", "FastAPI", "LLMs"];
 
+const sampleQueries = [
+  {
+    q: "Which customers have placed the most orders?",
+    sql: "SELECT CustomerName, COUNT(*) AS OrderCount\nFROM Orders\nGROUP BY CustomerName\nORDER BY OrderCount DESC\nLIMIT 5;",
+    answer: "The top customer is Save-a-lot Markets with 31 orders, followed by Ernst Handel with 30 orders and QUICK-Stop with 28 orders.",
+  },
+  {
+    q: "What's the total revenue from the Beverages category?",
+    sql: "SELECT SUM(od.UnitPrice * od.Quantity) AS Revenue\nFROM OrderDetails od\nJOIN Products p ON od.ProductID = p.ProductID\nWHERE p.Category = 'Beverages';",
+    answer: "Total revenue from the Beverages category is $267,868.18 across all recorded orders.",
+  },
+  {
+    q: "Show me products that are low in stock",
+    sql: "SELECT ProductName, UnitsInStock\nFROM Products\nWHERE UnitsInStock < 10\nORDER BY UnitsInStock ASC;",
+    answer: "5 products are critically low: Mishi Kobe Niku (29 units), Alice Mutton (0 units), Thuringer Rostbratwurst (0 units), Gnocchi di nonna Alice (21 units), and Rossle Sauerkraut (26 units).",
+  },
+  {
+    q: "Which employee has generated the highest sales?",
+    sql: "SELECT e.FirstName, e.LastName, SUM(od.UnitPrice * od.Quantity) AS TotalSales\nFROM Employees e\nJOIN Orders o ON e.EmployeeID = o.EmployeeID\nJOIN OrderDetails od ON o.OrderID = od.OrderID\nGROUP BY e.EmployeeID\nORDER BY TotalSales DESC\nLIMIT 1;",
+    answer: "Margaret Peacock has the highest sales, totaling $232,890.85 across her managed orders.",
+  },
+];
+
 function GrainOverlay() {
   return (
     <svg
@@ -140,6 +163,121 @@ function ThemeToggle({ theme, setTheme }) {
         <MoonIcon className="w-5 h-5 text-gray-700" />
       )}
     </button>
+  );
+}
+
+function ChatDemo({ isDark, border, subtext }) {
+  const [messages, setMessages] = useState([
+    {
+      role: "bot",
+      text: "Ask me anything about the Northwind database \u2014 try one of the suggestions below, or type your own question.",
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const [thinking, setThinking] = useState(false);
+
+  const handleAsk = (query) => {
+    if (!query.trim() || thinking) return;
+
+    const match = sampleQueries.find(
+      (s) => s.q.toLowerCase() === query.trim().toLowerCase()
+    );
+
+    setMessages((prev) => [...prev, { role: "user", text: query }]);
+    setInput("");
+    setThinking(true);
+
+    setTimeout(() => {
+      if (match) {
+        setMessages((prev) => [
+          ...prev,
+          { role: "bot", text: match.answer, sql: match.sql },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "bot",
+            text:
+              "This is a preview build with a fixed set of sample questions. Try one of the suggestions below to see a full response, including the generated SQL.",
+          },
+        ]);
+      }
+      setThinking(false);
+    }, 1100);
+  };
+
+  return (
+    <div
+      className={`relative ${
+        isDark ? "bg-white/[0.03] border-white/10" : "bg-black/[0.02] border-black/10"
+      } backdrop-blur-xl border rounded-2xl p-6 md:p-8 mt-6`}
+    >
+      <p className="text-xs uppercase tracking-widest text-amber-500 mb-4">
+        Interactive Preview &mdash; sample questions only
+      </p>
+
+      <div className="flex flex-col gap-3 mb-5 max-h-72 overflow-y-auto pr-1">
+        {messages.map((m, i) => (
+          <div
+            key={i}
+            className={`text-sm leading-relaxed ${
+              m.role === "user"
+                ? "self-end bg-amber-400 text-black px-4 py-2 rounded-xl rounded-br-sm max-w-[85%]"
+                : `self-start ${subtext} max-w-[95%]`
+            }`}
+          >
+            {m.text}
+            {m.sql && (
+              <pre
+                className={`mt-2 text-xs p-3 rounded-lg overflow-x-auto ${
+                  isDark ? "bg-black/40 text-gray-300" : "bg-black/5 text-gray-700"
+                }`}
+              >
+                {m.sql}
+              </pre>
+            )}
+          </div>
+        ))}
+        {thinking && (
+          <div className={`self-start text-sm ${subtext}`}>
+            Generating SQL and querying database&hellip;
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-wrap gap-2 mb-4">
+        {sampleQueries.map((s) => (
+          <button
+            key={s.q}
+            onClick={() => handleAsk(s.q)}
+            disabled={thinking}
+            className={`text-xs px-3 py-2 rounded-full border ${border} hover:border-amber-400 hover:text-amber-500 transition disabled:opacity-40`}
+          >
+            {s.q}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleAsk(input)}
+          placeholder="Type a question..."
+          disabled={thinking}
+          className={`flex-1 text-sm px-4 py-3 rounded-full border ${border} bg-transparent outline-none focus:border-amber-400 transition disabled:opacity-50`}
+        />
+        <button
+          onClick={() => handleAsk(input)}
+          disabled={thinking}
+          className="text-sm bg-amber-400 text-black px-5 py-3 rounded-full font-medium hover:bg-amber-300 transition disabled:opacity-50"
+        >
+          Ask
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -329,9 +467,7 @@ function App() {
 
               <div className="relative z-10">
                 {project.demoType === "embedded" ? (
-                  <span className="text-sm text-amber-500 font-medium">
-                    Live demo below &darr;
-                  </span>
+                  <ChatDemo isDark={isDark} border={border} subtext={subtext} />
                 ) : (
                   <div className="flex gap-3">
                     <a
