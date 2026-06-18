@@ -1,16 +1,155 @@
-# React + Vite
+# 🤖 Northwind Database Chatbot
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An AI-powered chatbot that converts natural language questions into SQL queries and returns answers in plain English. Built using LangChain, Groq's Llama 3.3 70B model, and Microsoft SQL Server.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📸 Screenshots
 
-## React Compiler
+![Screenshot1](screenshots/Screenshot%202026-06-11%20135228.png)
+![Screenshot2](screenshots/Screenshot%202026-06-11%20135257.png)
+![Screenshot3](screenshots/Screenshot%202026-06-11%20135314.png)
+![Screenshot4](screenshots/Screenshot%202026-06-11%20135340.png)
+![Screenshot5](screenshots/Screenshot%202026-06-11%20135410.png)
+![Screenshot6](screenshots/Screenshot%202026-06-11%20135503.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Technology | Purpose |
+|------------|---------|
+| Python 3.13 | Core programming language |
+| LangChain | AI/LLM framework |
+| Groq API (Llama 3.3 70B) | Natural language to SQL generation |
+| Microsoft SQL Server | Database backend |
+| Northwind Database | Sample ERP dataset |
+| Gradio | Web UI interface |
+| SQLAlchemy | Database ORM |
+| PyODBC | SQL Server connection driver |
+
+---
+
+## ✨ Features
+
+- 💬 Natural language to SQL conversion
+- 🗄️ Microsoft SQL Server integration
+- 🔒 Read-only query enforcement (SELECT only)
+- 🌐 Web-based Gradio UI
+- ⚡ Fast responses using Groq's Llama 3.3 70B
+- 🔄 Automatic fallback to SQLite (demo mode)
+- 📊 Returns results in clear natural language
+
+---
+
+## 🚀 How to Run
+
+### Prerequisites
+- Python 3.11+
+- Microsoft SQL Server (or SQL Server Express)
+- ODBC Driver 17 for SQL Server
+- Groq API key (free at [console.groq.com](https://console.groq.com))
+
+### Installation
+
+**Step 1: Clone the repository**
+```bash
+git clone https://github.com/akshayy718/northwind-chatbot.git
+cd northwind-chatbot
+```
+
+**Step 2: Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+**Step 3: Create `.env` file**
+```
+GROQ_API_KEY=your_groq_api_key_here
+```
+
+**Step 4: Configure SQL Server in `config.py`**
+```python
+DATABASE_CONFIG = {
+    "server": "YOUR_SERVER_NAME",
+    "database": "Northwind",
+    "username": "",       # Leave empty for Windows Authentication
+    "password": ""        # Leave empty for Windows Authentication
+}
+```
+
+**Step 5: Set up Northwind database**
+- Download `instnwnd.sql` (included in repo)
+- Run it in SQL Server Management Studio (SSMS)
+
+**Step 6: Run the chatbot**
+```bash
+python chatbot.py
+```
+
+**Step 7: Open in browser**
+```
+http://localhost:7860
+```
+
+---
+
+## 💬 Example Questions
+
+- "How many customers are there?"
+- "Show all customers from Germany"
+- "What are the top 5 most expensive products?"
+- "How many orders were placed in 1997?"
+- "Which product category has the most products?"
+- "What is the total revenue from all orders?"
+- "Who are the top 10 customers by number of orders?"
+- "Show all products in the Beverages category"
+
+---
+
+## 📁 Project Structure
+
+```
+northwind-chatbot/
+├── chatbot.py          # Main chatbot application
+├── config.py           # Database configuration
+├── requirements.txt    # Python dependencies
+├── instnwnd.sql        # Northwind database setup script
+├── .gitignore          # Git ignore rules
+├── screenshots/        # Output screenshots
+└── README.md           # Project documentation
+```
+
+---
+
+## 🔧 How It Works
+
+```
+User Question
+     ↓
+LangChain + Groq LLM
+     ↓
+SQL Query Generated
+     ↓
+Microsoft SQL Server
+     ↓
+Results Fetched
+     ↓
+Natural Language Answer
+     ↓
+Gradio UI Display
+```
+
+---
+
+## 👨‍💻 Author
+
+**Akshay Santhosh**
+- GitHub: [@akshayy718](https://github.com/akshayy718)
+- Email: akshaysanthosh718@gmail.com
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
