@@ -140,7 +140,7 @@ const sampleQueries = [
 function GrainOverlay() {
   return (
     <svg
-      className="pointer-events-none fixed inset-0 w-full h-full opacity-[0.04] mix-blend-soft-light z-50"
+      className="pointer-events-none fixed inset-0 w-full h-full opacity-[0.04] mix-blend-soft-light z-50 hidden md:block"
       xmlns="http://www.w3.org/2000/svg"
     >
       <filter id="grain">
@@ -178,7 +178,7 @@ function CursorGlow() {
 
   return (
     <div
-      className="pointer-events-none absolute w-[400px] h-[400px] rounded-full opacity-25 blur-[100px] z-0"
+      className="pointer-events-none absolute w-[400px] h-[400px] rounded-full opacity-25 blur-[100px] z-0 hidden md:block"
       style={{
         background: "radial-gradient(circle, #fbbf24 0%, transparent 70%)",
         left: pos.x - 200,
@@ -453,7 +453,7 @@ function App() {
         <CursorGlow />
 
         <div
-          className="absolute top-1/4 left-1/3 w-[500px] h-[500px] rounded-full opacity-15 blur-[120px] pointer-events-none"
+          className="absolute top-1/4 left-1/3 w-[250px] h-[250px] md:w-[500px] md:h-[500px] rounded-full opacity-15 blur-[60px] md:blur-[120px] pointer-events-none"
           style={{ background: "radial-gradient(circle, #fbbf24 0%, transparent 70%)" }}
         />
 
