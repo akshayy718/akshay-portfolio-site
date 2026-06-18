@@ -151,17 +151,30 @@ function GrainOverlay() {
   );
 }
 
-function CursorGlow() {
+function CursorGlow({ gyroTilt, isTouch }) {
   const [pos, setPos] = useState({ x: -300, y: -300 });
   const [target, setTarget] = useState({ x: -300, y: -300 });
 
   useEffect(() => {
+    if (isTouch) return;
     const handleMove = (e) => {
       setTarget({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener("mousemove", handleMove);
     return () => window.removeEventListener("mousemove", handleMove);
-  }, []);
+  }, [isTouch]);
+
+  useEffect(() => {
+    if (!isTouch || !gyroTilt) return;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const x = width / 2 + (gyroTilt.gamma / 45) * (width / 2);
+    const y = height / 2 + ((gyroTilt.beta - 90) / 45) * (height / 2);
+    setTarget({
+      x: Math.max(0, Math.min(width, x)),
+      y: Math.max(0, Math.min(height, y)),
+    });
+  }, [gyroTilt, isTouch]);
 
   useEffect(() => {
     let frameId;
@@ -253,11 +266,56 @@ const socialLinks = [
   },
 ];
 
-function TiltCard({ children, className, intensity = 8 }) {
+function useDeviceTilt() {
+  const [tilt, setTilt] = useState({ beta: 90, gamma: 0 });
+  const [isTouch, setIsTouch] = useState(false);
+  const [needsPermission, setNeedsPermission] = useState(false);
+
+  useEffect(() => {
+    const touchDevice = window.matchMedia("(pointer: coarse)").matches;
+    setIsTouch(touchDevice);
+    if (!touchDevice) return;
+
+    const handleOrientation = (e) => {
+      setTilt({ beta: e.beta ?? 90, gamma: e.gamma ?? 0 });
+    };
+
+    const needsIOSPermission =
+      typeof DeviceOrientationEvent !== "undefined" &&
+      typeof DeviceOrientationEvent.requestPermission === "function";
+
+    if (needsIOSPermission) {
+      setNeedsPermission(true);
+    } else {
+      window.addEventListener("deviceorientation", handleOrientation);
+    }
+
+    return () => window.removeEventListener("deviceorientation", handleOrientation);
+  }, []);
+
+  const requestPermission = async () => {
+    try {
+      const result = await DeviceOrientationEvent.requestPermission();
+      if (result === "granted") {
+        window.addEventListener("deviceorientation", (e) => {
+          setTilt({ beta: e.beta ?? 90, gamma: e.gamma ?? 0 });
+        });
+        setNeedsPermission(false);
+      }
+    } catch (err) {
+      setNeedsPermission(false);
+    }
+  };
+
+  return { tilt, isTouch, needsPermission, requestPermission };
+}
+
+function TiltCard({ children, className, intensity = 8, gyroTilt, isTouch }) {
   const ref = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e) => {
+    if (isTouch) return;
     const card = ref.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
@@ -266,7 +324,20 @@ function TiltCard({ children, className, intensity = 8 }) {
     setTilt({ x: py * -intensity, y: px * intensity });
   };
 
-  const handleMouseLeave = () => setTilt({ x: 0, y: 0 });
+  const handleMouseLeave = () => {
+    if (isTouch) return;
+    setTilt({ x: 0, y: 0 });
+  };
+
+  useEffect(() => {
+    if (!isTouch || !gyroTilt) return;
+    const clampedBeta = Math.max(-20, Math.min(20, gyroTilt.beta - 90));
+    const clampedGamma = Math.max(-20, Math.min(20, gyroTilt.gamma));
+    setTilt({
+      x: (clampedBeta / 20) * -intensity,
+      y: (clampedGamma / 20) * intensity,
+    });
+  }, [gyroTilt, isTouch, intensity]);
 
   return (
     <div
@@ -434,6 +505,7 @@ function TopNav({ theme, setTheme, border }) {
 function App() {
   const [theme, setTheme] = useState("dark");
   const isDark = theme === "dark";
+  const { tilt: gyroTilt, isTouch, needsPermission, requestPermission } = useDeviceTilt();
 
   const bg = isDark ? "bg-black" : "bg-[#fdfbf7]";
   const text = isDark ? "text-white" : "text-gray-900";
@@ -448,9 +520,18 @@ function App() {
       <GrainOverlay />
       <TopNav theme={theme} setTheme={setTheme} border={border} />
 
+      {needsPermission && (
+        <button
+          onClick={requestPermission}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-amber-400 text-black text-sm font-medium px-5 py-3 rounded-full shadow-lg"
+        >
+          Tap to enable tilt effects
+        </button>
+      )}
+
       {/* HERO */}
       <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24 pt-24 pb-16 overflow-hidden">
-        <CursorGlow />
+        <CursorGlow gyroTilt={gyroTilt} isTouch={isTouch} />
 
         <div
           className="absolute top-1/4 left-1/3 w-[500px] h-[500px] rounded-full opacity-15 blur-[120px] pointer-events-none"
@@ -564,6 +645,8 @@ function App() {
             >
             <TiltCard
               intensity={project.demoType === "embedded" ? 2 : 8}
+              gyroTilt={gyroTilt}
+              isTouch={isTouch}
               className={`relative ${cardBg} backdrop-blur-xl border rounded-2xl p-8 md:p-10 hover:border-amber-400/50 transition group`}
             >
               <div
