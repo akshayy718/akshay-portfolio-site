@@ -14,9 +14,9 @@ import {
   Network,
   Server,
   MessageCircle,
-  Github,
-  Linkedin,
-  Instagram,
+  Code,
+  Briefcase,
+  Camera,
 } from "lucide-react";
 
 const projects = [
@@ -231,17 +231,17 @@ const socialLinks = [
   {
     label: "GitHub",
     href: "https://github.com/akshayy718",
-    icon: Github,
+    icon: Code,
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/akshay-santhosh-435499208/",
-    icon: Linkedin,
+    icon: Briefcase,
   },
   {
     label: "Instagram",
     href: "https://www.instagram.com/_.akshay718",
-    icon: Instagram,
+    icon: Camera,
   },
 ];
 
