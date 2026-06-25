@@ -39,6 +39,7 @@ const projects = [
     description:
       "Ask questions in plain English, get real SQL results back. Uses a RAG-style retrieval pipeline built on LangChain and Groq (Llama 3.3 70B), connected to a Northwind MS SQL Server database with 91% semantic accuracy.",
     tech: ["LangChain", "Groq", "MS SQL Server", "Python"],
+    githubUrl: "https://github.com/akshayy718/northwind-chatbot",
     demoType: "embedded",
     featured: true,
     number: "02",
@@ -614,7 +615,19 @@ function App() {
 
               <div className="relative z-10">
                 {project.demoType === "embedded" ? (
-                  <ChatDemo isDark={isDark} border={border} subtext={subtext} />
+                  <>
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-block text-sm border ${border} px-4 py-2 rounded-full font-medium hover:border-amber-400 hover:text-amber-500 transition mb-4`}
+                      >
+                        GitHub
+                      </a>
+                    )}
+                    <ChatDemo isDark={isDark} border={border} subtext={subtext} />
+                  </>
                 ) : (
                   <div className="flex gap-3">
                     <a
