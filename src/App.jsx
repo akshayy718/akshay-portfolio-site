@@ -31,6 +31,7 @@ const projects = [
     liveUrl: "https://erp-agentic-ai-assistant.onrender.com",
     githubUrl: "https://github.com/akshayy718/ERP-AGENTIC-AI-ASSISTANT-",
     demoLabel: "Live Demo",
+    featured: true,
     number: "01",
   },
   {
